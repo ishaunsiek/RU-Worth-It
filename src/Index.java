@@ -35,51 +35,6 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		try {
-			String url = "jdbc:mysql://cs336.c7r2hjhvlcff.us-east-1.rds.amazonaws.com:3306/my_instance";
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = (Connection) DriverManager.getConnection(url, "root", "password");
-			Statement stmt = (Statement) con.createStatement();
-		
-			String str = "select distinct stream from PayscaleStreams";
-			ResultSet res = stmt.executeQuery(str);
-
-			int count = 0;
-			while(res.next() != false)
-			{
-				count++;
-			}
-			res.beforeFirst();
-			String[] streamsList = new String[count];
-			int c = 0;
-			while(res.next() != false){
-				streamsList[c] = res.getString(1).replaceAll("[-+.^:,']","");
-				c++;
-			}
-
-			request.setAttribute("streamsList", streamsList);
-			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/Main.jsp");
-			RequetsDispatcherObj.forward(request, response);
-			
-			res.close();
-			stmt.close();
-			con.close();
-			System.out.print("main.jsp");
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.print("failed main.jsp");
-			
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
 		try {
 			String url = "jdbc:mysql://cs336.c7r2hjhvlcff.us-east-1.rds.amazonaws.com:3306/my_instance";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -139,7 +94,7 @@ public class Index extends HttpServlet {
 			String[] stateIn;
 			String w = "";
 			if(request.getParameterValues("stateIn") == null){
-				w = "SELECT I.state, P.stream, P.rank, P.name, P.early, I.mid, I.net_price FROM  PayscaleStreams P, IpedSchool I "
+				w = "SELECT I.state, P.stream, P.rank, P.name, I.early, I.mid, I.net_price FROM  PayscaleStreams P, IpedSchool I "
 						+ "WHERE I.id = P.id ";
 				if(request.getParameterValues("streamIn") != null){
 					streamIn = request.getParameterValues("streamIn");
@@ -238,7 +193,14 @@ public class Index extends HttpServlet {
 			System.out.print("failed table.jsp");
 			
 		}
-		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 	
 
