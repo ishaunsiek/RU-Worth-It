@@ -33,7 +33,7 @@
     
     <!--    Javascipt for Multiple select  REMOVED MIN-->
     <link href="dist/css/select2.css" rel="stylesheet" />
-    <script src="dist/js/select2.full.min.js"></script>
+    <script src="dist/js/select2.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -119,19 +119,10 @@
                             <div class="col-md-4">
                                     <p class="intro-text">States</p>
                             <script type="text/javascript">
-                                function matchStart (term, text) {
-                                  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
-                                    return true;
-                                  }
-                                  return false;
-                                }
                                $(document).ready(function () {
-                                   $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
-                                       $(".js-state-multiple").select2({
-                                            matcher: oldMatcher(matchStart),
-                                            placeholder: " Any state",
-                                            width: '300px'
-                                       })
+                                   $(".js-state-multiple").select2({
+                                        placeholder: " Any state",
+                                        width: '300px'
                                    })
                                });
                             </script>
@@ -205,6 +196,10 @@
     <section id="about" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
+                <h2>About Grayscale</h2>
+                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
+                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
                 <h2>About Grayscale</h2>
                 <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
                 <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>

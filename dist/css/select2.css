@@ -42,6 +42,7 @@
       box-sizing: border-box;
       border: none;
       font-size: 100%;
+      color:crimson;
       margin-top: 5px;
       padding: 0; }
       .select2-container .select2-search--inline .select2-search__field::-webkit-search-cancel-button {
