@@ -13,7 +13,7 @@
 	<p>${i}</p>
 </c:forEach>
 
-<form method="get" action="/DBCollege/Index">
+<form method="post" action="/DBCollege/Index">
     
   <p>Pick the options you want:</p>
   <br>
