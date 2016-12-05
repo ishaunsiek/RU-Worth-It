@@ -187,11 +187,12 @@
                                     console.log($("#streams_field").select2("val"));
                                     console.log($("#states_field").select2("val"));
 //                                    document.getElementById("main-form").submit();
+                                    var data = $("main-form").serialize();
                                     $("#main-form").ajaxForm(
                                         {
                                         url: 'localhost:8080/DBCollege/Index', 
                                         type: 'post',
-//                                      data: this.serialize(),
+                                        data: data,
                                         success: function(responseText){alert('ok'+responseText.text);}, 
 //                                        error: function(responseText){alert('ok'+responseText.text);} 
                                         })
