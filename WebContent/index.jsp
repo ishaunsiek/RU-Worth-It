@@ -186,8 +186,8 @@
                                 $("#main_submit").click(function(){
                                     console.log($("#streams_field").select2("val"));
                                     console.log($("#states_field").select2("val"));
-//                                    document.getElementById("main-form").submit();
-                                    var streams = $("#stream_field").select2("val");
+                                    document.getElementById("main-form").submit();
+                                   /*  var streams = $("#stream_field").select2("val");
                                     var states = $("#states_field").select2("val");
                                     $.post(
                                         "localhost:8080/DBCollege/Index",
@@ -199,7 +199,7 @@
                                             //do something
                                             console.log("sent data! " + data + "\nstatus: " + status );
                                         }
-                                      );
+                                      ); */
 //                                    $("#main-form").ajaxForm({
 //                                        url: 'localhost:8080/DBCollege/Index', 
 //                                        type: 'post',
@@ -224,7 +224,7 @@
             </div>
         </div>
     </header>
-
+    
     <!-- About Section -->
     <section id="about" class="container content-section text-center">
         <div class="row">

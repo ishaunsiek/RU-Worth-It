@@ -8,7 +8,7 @@
 <title>Table</title>
 </head>
 <body>
-
+<h3> THIS IS TABLE.JSP</h3>
 <div id="table_div_stream"></div>
 <br><br>
 <div id="table_div_college"></div>
