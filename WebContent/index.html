@@ -13,7 +13,7 @@
     
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.js"></script> 
 
@@ -181,20 +181,20 @@
                                 </div>
                             </div>
                         </form>
-                        <script>
+                        <script type="text/javascript">
                             $(document).ready(function(){
                                 $("#main_submit").click(function(){
                                     console.log($("#streams_field").select2("val"));
                                     console.log($("#states_field").select2("val"));
-                                    document.getElementById("main-form").submit(){
-                                        $.ajax({
-                                             url:'localhost:8080/DBCollege/Index',
-                                             data: $("#main-form").serialize(),
-                                             success: function (data) {
-                                                    $('#result').html(data);
-                                            }
+//                                    document.getElementById("main-form").submit();
+                                    $("#main-form").ajaxForm(
+                                        {
+                                        url: 'localhost:8080/DBCollege/Index', 
+                                        type: 'post',
+//                                      data: this.serialize(),
+                                        success: function(responseText){alert('ok'+responseText.text);}, 
+//                                        error: function(responseText){alert('ok'+responseText.text);} 
                                         })
-                                    };
                                 });
                             });
                         </script>
