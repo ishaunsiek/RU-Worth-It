@@ -187,15 +187,29 @@
                                     console.log($("#streams_field").select2("val"));
                                     console.log($("#states_field").select2("val"));
 //                                    document.getElementById("main-form").submit();
-                                    var data = $("main-form").serialize();
-                                    $("#main-form").ajaxForm(
+                                    var streams = $("#stream_field").select2("val");
+                                    var states = $("#states_field").select2("val");
+                                    $.post(
+                                        "localhost:8080/DBCollege/Index",
                                         {
-                                        url: 'localhost:8080/DBCollege/Index', 
-                                        type: 'post',
-                                        data: data,
-                                        success: function(responseText){alert('ok'+responseText.text);}, 
-//                                        error: function(responseText){alert('ok'+responseText.text);} 
-                                        })
+                                        streamIn: streams,
+                                        stateIn: states
+                                        },
+                                        function(data, status){
+                                            //do something
+                                            console.log("sent data! " + data + "\nstatus: " + status );
+                                        }
+                                      );
+//                                    $("#main-form").ajaxForm({
+//                                        url: 'localhost:8080/DBCollege/Index', 
+//                                        type: 'post',
+//                                        data: {
+//                                            streamIn: streams,
+//                                            stateIn: states,
+//                                        },
+//                                        success: function(responseText){alert('ok'+responseText.text);}, 
+////                                        error: function(responseText){alert('ok'+responseText.text);} 
+//                                    });
                                 });
                             });
                         </script>
