@@ -186,7 +186,15 @@
                                 $("#main_submit").click(function(){
                                     console.log($("#streams_field").select2("val"));
                                     console.log($("#states_field").select2("val"));
-                                    document.getElementById("main-form").submit();
+                                    document.getElementById("main-form").submit(){
+                                        $.ajax({
+                                             url:'localhost:8080/DBCollege/Index',
+                                             data: $("#main-form").serialize(),
+                                             success: function (data) {
+                                                    $('#result').html(data);
+                                            }
+                                        })
+                                    };
                                 });
                             });
                         </script>
