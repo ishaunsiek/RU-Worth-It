@@ -265,27 +265,49 @@
     
     <!-- About Section -->
     <section id="about" class="container content-section text-center">
-		<p>Colleges Table<br></p>
-		<div id="collegesTable" class="table"></div>
-		<p>Streams Table<br></p>
-		<div id="streamsTable" class="table"></div>
-    	<div class="result"></div>
-    
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>About Grayscale</h2>
-                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
-                <h2>About Grayscale</h2>
-                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
-            </div>
-        </div>
+		<div class="container col-lg-12">
+			<h2 style="margin-bottom:10px">Data</h2>
+			<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#collegesDiv" style="font-size:18px">Colleges</a></li>
+			<li><a data-toggle="tab" href="#streamsDiv" style="font-size:18px">Streams and Jobs</a></li>
+			</ul>
+		
+			<div class="tab-content">
+				<div id="collegesDiv" class="tab-pane fade in active">
+<!-- 					<h3>Colleges</h3> -->
+					<div id="collegesTable" class="table"></div>
+					<div class="container col-lg-12" style="padding:30px 0px">
+						<h2 style="margin-bottom:10px">Data</h2>
+						<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#collegesDiv" style="font-size:18px">Colleges</a></li>
+						<li><a data-toggle="tab" href="#streamsDiv" style="font-size:18px">Streams and Jobs</a></li>
+						</ul>
+						
+						<section id="misc">
+							<div class="tab-content">
+								<div id="collegesDive" class="tab-pane fade in active">
+					<!-- 					<h3>Colleges</h3> -->
+									<div id="collegesTable" class="table"></div>
+								</div>
+								<div id="streamsDive" class="tab-pane fade">
+					<!-- 					<h3>Streams and Jobs</h3> -->
+									<div id="streamsTable" class="table"></div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<div id="streamsDiv" class="tab-pane fade">
+<!-- 					<h3>Streams and Jobs</h3> -->
+					<div id="streamsTable" class="table"></div>
+				</div>
+			</div>
+		</div>
+		</div>
     </section>
 
-    <!-- Download Section -->
+    <!-- Miscellaneous (Aggregates) Section -->
     <section id="download" class="content-section text-center">
         <div class="download-section">
             <div class="container">
