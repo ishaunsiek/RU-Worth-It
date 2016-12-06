@@ -13,7 +13,7 @@
 	<p>${i}</p>
 </c:forEach>
 
-<form method="post" action="/DBCollege/Index">
+<form method="post" action="/DBCollege/Stream">
     
   <p>Pick the options you want:</p>
   <br>

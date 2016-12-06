@@ -63,9 +63,9 @@ public class Index extends HttpServlet {
 			ResultSet res; 
 			
 			String[] streamIn;
-			String[] stIn;
+			//String[] stIn;
 			String q = "";
-			
+			/*
 			if((streamIn = request.getParameterValues("streamIn")) != null){
 				for(int i = 0; i < streamIn.length; i++){
 					System.out.println(streamIn[i]);
@@ -77,7 +77,7 @@ public class Index extends HttpServlet {
 					System.out.println(stIn[i]);
 				}
 			}
-			
+			*/
 			
 			if(request.getParameterValues("streamIn") == null){
 				q = "select stream, rank, job, mid, common_major from PayscaleJobs limit 5000";
@@ -174,13 +174,13 @@ public class Index extends HttpServlet {
 				PreparedStatement ps = (PreparedStatement) con.prepareStatement(w);
 				int x = 0;
 				for(x = 0; x < stateIn.length; x++){
-					System.out.println("state: "+stateIn[x] + " x:"+x);
+					//System.out.println("state: "+stateIn[x] + " x:"+x);
 					ps.setString(x+1, stateIn[x]);
 				}
 				if(request.getParameterValues("streamIn") != null){
 					streamIn = request.getParameterValues("streamIn");
 					for(int i = x; i < streamIn.length + x; i++){
-						System.out.println("stream: "+streamIn[i - x] + " i:"+i);
+						//System.out.println("stream: "+streamIn[i - x] + " i:"+i);
 						ps.setString(i+1, streamIn[i - x]);
 					}
 				}
@@ -206,7 +206,9 @@ public class Index extends HttpServlet {
 				collegeTable[c][4] = "" + res.getInt(5);
 				collegeTable[c][5] = "" + res.getInt(6);
 				collegeTable[c][6] = "" + res.getInt(7);
+				//collegeTable[c][7] = "" + (((double)res.getInt(7))/((double)res.getInt(5)));
 				c++;
+				System.out.println("ans: "+((double)res.getInt(7))/((double)res.getInt(5)));
 			}
 			/*
 			for(int i = 0; i < collegeTable.length; i++){
@@ -240,10 +242,10 @@ public class Index extends HttpServlet {
 			stmt.close();
 			con.close();
 			
-			System.out.print("table.jsp");
+			System.out.print("Success in Index");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.print("failed table.jsp");
+			System.out.print("failed in Index");
 			
 		}
 	}
