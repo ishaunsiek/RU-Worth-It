@@ -263,14 +263,31 @@
         </div>
     </header>
     
-    <!-- About Section -->
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#collegesTab").click(function(){
+                console.log("Colleges Tabbed");
+                $("#collegesAgDiv").show();
+                $("#streamsAgDiv").hide();
+            });
+            $("#streamsTab").click(function(){
+                console.log("Streams Tabbed");
+                $("#collegesAgDiv").hide();
+                $("#streamsAgDiv").show();
+//                $('.nav-tabs a[href="#streamsAgDiv"]').tab('show');
+            });
+        });
+    </script>
+                        
+    <!-- Data Section -->
     <section id="data" class="container content-section text-center">
         <div class="row">
 		<div class="container col-lg-12">
 			<h2 style="margin-bottom:10px">Data</h2>
 			<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#collegesDiv" style="font-size:18px">Colleges</a></li>
-			<li><a data-toggle="tab" href="#streamsDiv" style="font-size:18px">Streams and Jobs</a></li>
+			<li class="active"><a id="collegesTab" data-toggle="tab" href="#collegesDiv" style="font-size:18px">Colleges</a></li>
+			<li><a id="streamsTab" data-toggle="tab" href="#streamsDiv" style="font-size:18px">Streams and Jobs</a></li>
 			</ul>
 		
 			<div class="tab-content">
@@ -289,33 +306,52 @@
 
     <!-- Miscellaneous (Aggregates) Section -->
     <section id="misc" class="content-section text-center">
-    					<div class="container col-lg-10 col-lg-offset-1">
-						<h2 style="margin-bottom:10px">Data</h2>
-						<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#collegesDiv" style="font-size:18px">Colleges</a></li>
-						<li><a data-toggle="tab" href="#streamsDiv" style="font-size:18px">Streams and Jobs</a></li>
-						</ul>
-						
-						<div id="misc" class="tab-content">
-							<div id="collegesDive" class="tab-pane fade in active">
-				<!-- 					<h3>Colleges</h3> -->
-								<div id="collegesTable" class="table"></div>
-							</div>
-							<div id="streamsDive" class="tab-pane fade">
-				<!-- 					<h3>Streams and Jobs</h3> -->
-								<div id="streamsTable" class="table"></div>
-							</div>
-						</div>
-					</div>
-        <div class="download-section">
-            <div class="container">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Download Grayscale</h2>
-                    <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
-                    <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
-                </div>
-            </div>
-        </div>
+		<div id="collegesAgDiv" class="container col-lg-10 col-lg-offset-1">
+			<h2 style="padding-top:50px">Miscellaneous & Aggregates</h2>
+			<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#avgSalCol" style="font-size:18px">Average Salaries of States and Streams</a></li>
+			<li><a data-toggle="tab" href="#topColByStream" style="font-size:18px">Top Colleges by State</a></li>
+			<li><a data-toggle="tab" href="#mostMeaningfulCol" style="font-size:18px">Most Meaningful Colleges </a></li>
+			</ul>
+			
+			<div id="miscColleges" class="tab-content">
+				<div id="avgSalCol" class="tab-pane fade in active">
+					<h3>1</h3>
+					<div id="avgSalColTable" class="table"></div>
+				</div>
+				<div id="topColByStream" class="tab-pane fade">
+					<h3>2</h3>
+					<div id="topColByStreamTable" class="table"></div>
+				</div>
+				<div id="mostMeaningfulCol" class="tab-pane fade">
+					<h3>3</h3>
+					<div id="mostMeaningfulColTable" class="table"></div>
+				</div>
+			</div>
+		</div>
+		<div id="streamsAgDiv" class="container col-lg-10 col-lg-offset-1" style="display: none">
+			<h2 style="padding-top:50px">Miscellaneous & Aggregates</h2>
+			<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#avgSalJob" style="font-size:18px">Average Salary of Jobs</a></li>
+			<li><a data-toggle="tab" href="#avgSalMaj" style="font-size:18px">Average Salary of Common Major</a></li>
+			<li><a data-toggle="tab" href="#topJobMaj" style="font-size:18px">Top Jobs for Majors</a></li>
+			</ul>
+			
+			<div id="miscStreams" class="tab-content">
+				<div id="avgSalJob" class="tab-pane fade in active">
+					<h3>4</h3>
+					<div id="avgSalJobTable" class="table"></div>
+				</div>
+				<div id="avgSalMaj" class="tab-pane fade">
+					<h3>5</h3>
+					<div id="avgSalMajTable" class="table"></div>
+				</div>
+				<div id="topJobMaj" class="tab-pane fade">
+					<h3>6</h3>
+					<div id="topJobMajTable" class="table"></div>
+				</div>
+			</div>
+		</div>
     </section>
 
     <!-- Contact Section -->
