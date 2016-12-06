@@ -152,7 +152,7 @@ public class Index extends HttpServlet {
 				}
 			} else {
 				stateIn = request.getParameterValues("stateIn");
-				w = "SELECT I.state, P.stream, P.rank, P.name, P.early, I.mid, I.net_price FROM  PayscaleStreams P, IpedSchool I "
+				w = "SELECT I.state, P.stream, P.rank, P.name, P.early, P.mid, I.net_price FROM  PayscaleStreams P, IpedSchool I "
 						+ "WHERE I.id = P.id and state in (";
 		
 				for(int i = 0; i < stateIn.length - 1; i++){
