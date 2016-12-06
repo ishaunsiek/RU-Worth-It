@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+import java.util.HashMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class Index
@@ -30,7 +33,15 @@ public class Index extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
+    public static void printTableArray(String[][] table){
+    	for(int i = 0; i < table.length; i++){
+    		System.out.println();
+    		for(int j = 0; j < table[i].length; j++){
+    			System.out.print(table[i][j] + "\t");
+    		}
+    	}
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -44,14 +55,30 @@ public class Index extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
+			System.out.println("HI");
 			String url = "jdbc:mysql://cs336.c7r2hjhvlcff.us-east-1.rds.amazonaws.com:3306/my_instance";
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = (Connection) DriverManager.getConnection(url, "root", "password");
 			Statement stmt = (Statement) con.createStatement();
-			ResultSet res;
+			ResultSet res; 
 			
 			String[] streamIn;
+			String[] stIn;
 			String q = "";
+			
+			if((streamIn = request.getParameterValues("streamIn")) != null){
+				for(int i = 0; i < streamIn.length; i++){
+					System.out.println(streamIn[i]);
+				}
+			}
+			
+			if( (stIn = request.getParameterValues("stateIn")) != null){
+				for(int i = 0; i < stIn.length; i++){
+					System.out.println(stIn[i]);
+				}
+			}
+			
+			
 			if(request.getParameterValues("streamIn") == null){
 				q = "select stream, rank, job, mid, common_major from PayscaleJobs limit 5000";
 				res = stmt.executeQuery(q);
@@ -188,9 +215,27 @@ public class Index extends HttpServlet {
 			*/
 			request.setAttribute("collegeTable", collegeTable);
 			
-			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/table.jsp");
-			RequetsDispatcherObj.forward(request, response);
-
+			System.out.println("\n\nSTREAM TABLE==================================================");
+			printTableArray(streamTable);
+			System.out.println("\n\nCOLLEGE TABLE=================================================");
+			printTableArray(collegeTable);
+			HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
+			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)"}};
+			responseMap.put("CollegesTableHeader", collegesHeader);
+			responseMap.put("CollegesTable", collegeTable);
+			String[][] streamsHeader = {{"Stream", "Rank", "Job title", "Mid-career salary ($)", "Most common major"}};
+			responseMap.put("StreamsTableHeader", streamsHeader);
+			responseMap.put("StreamsTable", streamTable);
+			String jsonOut = new Gson().toJson(responseMap);
+//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/table.jsp");
+//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher(responseMap);
+//			RequetsDispatcherObj.forward(request, response);
+			
+			System.out.println("\n\n\n" + jsonOut);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(jsonOut);
+			
 			res.close();
 			stmt.close();
 			con.close();

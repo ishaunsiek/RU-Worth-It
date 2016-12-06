@@ -34,6 +34,17 @@
     <!--    Javascipt for Multiple select  REMOVED MIN-->
     <link href="dist/css/select2.css" rel="stylesheet" />
     <script src="dist/js/select2.js"></script>
+    
+    <!-- 	Google Chart Scripts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+    </script>
+    
+    <!-- 	Other methods and styling-->
+    <script src="js/index.js"></script>
+    <link href="css/index.css" rel="stylesheet"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -181,25 +192,52 @@
                                 </div>
                             </div>
                         </form>
+                        
+
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $("#main_submit").click(function(){
                                     console.log($("#streams_field").select2("val"));
+                                    //var arr1 = $("#streams_field").select2("val");
                                     console.log($("#states_field").select2("val"));
-                                    document.getElementById("main-form").submit();
-                                   /*  var streams = $("#stream_field").select2("val");
-                                    var states = $("#states_field").select2("val");
+                                    //var arr2 = $("#states_field").select2("val");
+                //                    document.getElementById("main-form").submit();
+                                    var streams = $("#streams_field").serializeArray();
+                                    var states = $("#states_field").serializeArray();
+                                    //var all = arr1.concat(arr2);
+                                    var all = streams.concat(states);
+                                    
+                                    //var alls = $("#streams_field").serializeArray() + $("#states_field").serializeArray();
+                                    console.log(streams);
+                                    console.log(states);
+                                    console.log(all);
+                
+                                    //console.log(alls);
+                                    /*
+                                    jQuery.each( streams, function( i, stream ) {
+                                        $( "#results" ).append( stream.value + " " );
+                                      });*/
                                     $.post(
-                                        "localhost:8080/DBCollege/Index",
-                                        {
-                                        streamIn: streams,
+                                        "/DBCollege/Index",
+                                        /*{ 
+                                        streamIn: JSON.stringify(streams),
                                         stateIn: states
-                                        },
+                                        },*/
+                                        //$.param(streams),
+                                        $.param(all),
                                         function(data, status){
                                             //do something
                                             console.log("sent data! " + data + "\nstatus: " + status );
-                                        }
-                                      ); */
+                                            console.log(data);
+                                            console.log(data.CollegesTable);
+                                            console.log(data.StreamsTable);
+                                            drawTable("Colleges", data.CollegesTableHeader[0], data.CollegesTable, "collegesTable");
+                                            drawTable("Streams and Jobs", data.StreamsTableHeader[0], data.StreamsTable, "streamsTable");
+                                            //$("div.result").html(data); 
+                                        },
+                                        "json"
+                                      );
+                                      
 //                                    $("#main-form").ajaxForm({
 //                                        url: 'localhost:8080/DBCollege/Index', 
 //                                        type: 'post',
@@ -227,6 +265,12 @@
     
     <!-- About Section -->
     <section id="about" class="container content-section text-center">
+		<p>Colleges Table<br></p>
+		<div id="collegesTable" class="table"></div>
+		<p>Streams Table<br></p>
+		<div id="streamsTable" class="table"></div>
+    	<div class="result"></div>
+    
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>About Grayscale</h2>
