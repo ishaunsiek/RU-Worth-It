@@ -10,6 +10,11 @@
 http://ec2-54-91-144-188.compute-1.amazonaws.com:8080/RU-Worth-It/index.h2>
 <br>As far as we know, it runs on mobile, Chrome, Safari, Firefox and IE.
 
+### Used [Bootstrap](http://startbootstrap.com/) and template [Grayscale](http://startbootstrap.com/template-overviews/grayscale/)
+### Used MySQL, AWS, Apache TomCat
+### Used HTML, CSS, Javascript, Jquery & AJAX
+### Click here for [ER Diagram*](https://github.com/ishaunsiek/RU-Worth-It/blob/backend-merge/ER-Diagram.pdf)
+<p>*ER Diagram entity and attribute names are modified a little to be more descriptive</p>
 
 <h2>QUERIES:</h2>
 <pre>
@@ -122,7 +127,3 @@ WHERE
     AND stream IN [input_stream]
 GROUP BY state;
 </pre>
-
-### Used [Bootstrap](http://startbootstrap.com/) and template [Grayscale](http://startbootstrap.com/template-overviews/grayscale/)
-### Used MySQL, AWS, Apache TomCat
-### Used HTML, CSS, Javascript, Jquery & AJAX
