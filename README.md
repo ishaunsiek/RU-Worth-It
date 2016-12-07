@@ -7,7 +7,7 @@
 
 
 <h2>URL: </h2>
-http://ec2-54-91-144-188.compute-1.amazonaws.com:8080/RU-Worth-It/index.h2>
+http://ec2-54-91-144-188.compute-1.amazonaws.com:8080/RU-Worth-It/index.html
 <br>As far as we know, it runs on mobile, Chrome, Safari, Firefox and IE.
 
 ### Used [Bootstrap](http://startbootstrap.com/) and template [Grayscale](http://startbootstrap.com/template-overviews/grayscale/)
