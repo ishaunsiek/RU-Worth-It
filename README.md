@@ -15,6 +15,9 @@ http://ec2-54-91-144-188.compute-1.amazonaws.com:8080/RU-Worth-It/index.html
 ### Used HTML, CSS, Javascript, Jquery & AJAX
 ### Click here for [ER Diagram*](https://github.com/ishaunsiek/RU-Worth-It/blob/backend-merge/ER-Diagram.pdf)
 <p>*ER Diagram entity and attribute names are modified a little to be more descriptive</p>
+### Data souces:
+<p> > http://www.payscale.com/college-salary-report
+<br> > https://nces.ed.gov/ipeds/datacenter/</p>
 
 <h2>QUERIES:</h2>
 <pre>
