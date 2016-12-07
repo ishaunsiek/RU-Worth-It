@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -55,7 +57,7 @@ public class Stream extends HttpServlet {
 			String q2 = "";
 			String q3 = "";
 			
-			q1 = "select stream, rank, job, avg(mid), common_major from PayscaleJobs "
+			q1 = "select stream, job, avg(mid), common_major from PayscaleJobs "
 					+ "group by stream "
 					+ "limit 5000";
 			
@@ -73,7 +75,7 @@ public class Stream extends HttpServlet {
 			if(request.getParameterValues("streamIn") != null){
 				streams = getStreams(request);
 				
-				q1 = "select stream, rank, job, avg(mid), common_major from PayscaleJobs "
+				q1 = "select stream, job, avg(mid), common_major from PayscaleJobs "
 						+ "where stream in " + streams
 						+ "group by stream "
 						+ "limit 5000";
@@ -103,13 +105,12 @@ public class Stream extends HttpServlet {
 			
 			int c = 0;
 			res1.beforeFirst();
-			String[][] q1Table = new String[newcount][5];
+			String[][] q1Table = new String[newcount][4];
 			while(res1.next() != false){
 				q1Table[c][0] = res1.getString(1).replaceAll("[-+.^:,']","");
-				q1Table[c][1] = "" + res1.getInt(2);
-				q1Table[c][2] = res1.getString(3).replaceAll("[-+.^:,']","");
-				q1Table[c][3] = "" + res1.getDouble(4);
-				q1Table[c][4] = res1.getString(5).replaceAll("[-+.^:,']","");
+				q1Table[c][1] = res1.getString(2).replaceAll("[-+.^:,']","");
+				q1Table[c][2] = "" + res1.getInt(3);
+				q1Table[c][3] = res1.getString(4).replaceAll("[-+.^:,']","");
 				c++;
 			}
 			
@@ -128,7 +129,7 @@ public class Stream extends HttpServlet {
 				q2Table[c][0] = res2.getString(1).replaceAll("[-+.^:,']","");
 				q2Table[c][1] = "" + res2.getInt(2);
 				q2Table[c][2] = res2.getString(3).replaceAll("[-+.^:,']","");
-				q2Table[c][3] = "" + res2.getDouble(4);
+				q2Table[c][3] = "" + res2.getInt(4);
 				q2Table[c][4] = res2.getString(5).replaceAll("[-+.^:,']","");
 				c++;
 			}
@@ -160,29 +161,30 @@ public class Stream extends HttpServlet {
 			}
 			*/
 			
-			System.out.println("\n\nQ1 TABLE==================================================");
-			printTableArray(q1Table);
-			System.out.println("\n\nQ2 TABLE=================================================");
-			printTableArray(q2Table);
-			System.out.println("\n\nQ3 TABLE=================================================");
-			printTableArray(q3Table);
-			/*HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
-			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)"}};
-			responseMap.put("CollegesTableHeader", collegesHeader);
-			responseMap.put("CollegesTable", collegeTable);
-			String[][] streamsHeader = {{"Stream", "Rank", "Job title", "Mid-career salary ($)", "Most common major"}};
-			responseMap.put("StreamsTableHeader", streamsHeader);
-			responseMap.put("StreamsTable", streamTable);
+//			System.out.println("\n\nQ1 TABLE==================================================");
+//			printTableArray(q1Table);
+//			System.out.println("\n\nQ2 TABLE=================================================");
+//			printTableArray(q2Table);
+//			System.out.println("\n\nQ3 TABLE=================================================");
+//			printTableArray(q3Table);
+			
+			HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
+			String[][] q1Header = {{"Stream", "Job Title", "Average Mid-career Salary ($)", "Most Common Major"}};
+			responseMap.put("q1Header", q1Header);
+			responseMap.put("q1Table", q1Table);
+			String[][] q2Header = {{"Stream", "Rank", "Job Title", "Average Mid-career Salary ($)", "Most Common Major"}};
+			responseMap.put("q2Header", q2Header);
+			responseMap.put("q2Table", q2Table);
+			String[][] q3Header = {{"Stream", "Rank", "Job Title", "Most Common Major", "Mid-Career Salary ($)"}};
+			responseMap.put("q3Header", q3Header);
+			responseMap.put("q3Table", q3Table);
 			String jsonOut = new Gson().toJson(responseMap);
-//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/table.jsp");
-//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher(responseMap);
-//			RequetsDispatcherObj.forward(request, response);
 			
 			System.out.println("\n\n\n" + jsonOut);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(jsonOut);
-			*/
+			
 			
 			res1.close();
 			res2.close();

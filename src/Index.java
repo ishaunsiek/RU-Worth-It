@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,7 +56,7 @@ public class Index extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			System.out.println("HI");
+//			System.out.println("HI");
 			String url = "jdbc:mysql://cs336.c7r2hjhvlcff.us-east-1.rds.amazonaws.com:3306/my_instance";
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = (Connection) DriverManager.getConnection(url, "root", "password");
@@ -109,15 +110,21 @@ public class Index extends HttpServlet {
 			int c = 0;
 			res.beforeFirst();
 			String[][] streamTable = new String[newcount][5];
+			String[][] streamChartTable = new String[newcount][5];
 			while(res.next() != false){
 				streamTable[c][0] = res.getString(1).replaceAll("[-+.^:,']","");
 				streamTable[c][1] = "" + res.getInt(2);
 				streamTable[c][2] = res.getString(3).replaceAll("[-+.^:,']","");
 				streamTable[c][3] = "" + res.getInt(4);
 				streamTable[c][4] = res.getString(5).replaceAll("[-+.^:,']","");
+				
+				streamChartTable[c][0] = res.getString(3).replaceAll("[-+.^:,']","");
+				streamChartTable[c][1] = "" + res.getInt(4);
+				streamChartTable[c][2] = res.getString(5).replaceAll("[-+.^:,']","");
+				streamChartTable[c][3] = res.getString(1).replaceAll("[-+.^:,']","");
+				streamChartTable[c][4] = streamChartTable[c][1];
 				c++;
 			}
-			
 			/*
 			for(int i = 0; i < streamTable.length; i++){
 				System.out.println(streamTable[i][0]+" "+streamTable[i][1]+" "+streamTable[i][2]+" "+streamTable[i][3]+" "+streamTable[i][4]);
@@ -125,6 +132,39 @@ public class Index extends HttpServlet {
 			*/
 			
 			request.setAttribute("streamTable", streamTable);
+			String stateminmax = "select state, min(early), max(early), min(mid), max(mid), min(net_price), max(net_price) "
+					+ "from IpedSchool "
+					+ "group by state ";
+			
+			ResultSet smm = stmt.executeQuery(stateminmax);
+			newcount = 0;
+			while(smm.next() != false)
+			{
+				newcount++;
+			}
+			c = 0;
+			smm.beforeFirst();
+			HashMap<String, String[]> stateMinMaxMap = new HashMap<String, String[]>();
+			String[] stateStats = new String[6];
+			String[][] stateMinMaxTable = new String[newcount][7];
+			while(smm.next() != false){
+				stateStats[0] = smm.getString(2);	//early
+				stateStats[1] = smm.getString(3);
+				stateStats[2] = smm.getString(4);	//mid	
+				stateStats[3] = smm.getString(5);	
+				stateStats[4] = smm.getString(6);	//tuition
+				stateStats[5] = smm.getString(7);
+				System.out.println(stateStats);
+//				stateMinMaxTable[c][0] = smm.getString(1).replaceAll("[-+.^:,']","");
+//				stateMinMaxTable[c][1] = "" + smm.getInt(2); //early
+//				stateMinMaxTable[c][2] = "" + smm.getInt(3);
+//				stateMinMaxTable[c][3] = "" + smm.getInt(4); //mid
+//				stateMinMaxTable[c][4] = "" + smm.getInt(5);
+//				stateMinMaxTable[c][5] = "" + smm.getInt(6); //tuition
+//				stateMinMaxTable[c][6] = "" + smm.getInt(7);
+				stateMinMaxMap.put(smm.getString(1).replaceAll("[-+.^:,']",""), stateStats);
+			}
+//			printTableArray(stateMinMaxTable);
 			
 			String[] stateIn;
 			String w = "";
@@ -174,17 +214,14 @@ public class Index extends HttpServlet {
 				PreparedStatement ps = (PreparedStatement) con.prepareStatement(w);
 				int x = 0;
 				for(x = 0; x < stateIn.length; x++){
-					//System.out.println("state: "+stateIn[x] + " x:"+x);
 					ps.setString(x+1, stateIn[x]);
 				}
 				if(request.getParameterValues("streamIn") != null){
 					streamIn = request.getParameterValues("streamIn");
 					for(int i = x; i < streamIn.length + x; i++){
-						//System.out.println("stream: "+streamIn[i - x] + " i:"+i);
 						ps.setString(i+1, streamIn[i - x]);
 					}
 				}
-				System.out.println("w: "+w);
 				res = ps.executeQuery();
 			}
 			
@@ -194,10 +231,10 @@ public class Index extends HttpServlet {
 			{
 				newcount++;
 			}
-			
 			c = 0;
 			res.beforeFirst();
-			String[][] collegeTable = new String[newcount][7];
+			String[][] collegeTable = new String[newcount][8];
+			String[][] collegeChartTable = new String[newcount][5];
 			while(res.next() != false){
 				collegeTable[c][0] = res.getString(1).replaceAll("[-+.^:,']","");
 				collegeTable[c][1] = res.getString(2).replaceAll("[-+.^:,']","");
@@ -206,34 +243,51 @@ public class Index extends HttpServlet {
 				collegeTable[c][4] = "" + res.getInt(5);
 				collegeTable[c][5] = "" + res.getInt(6);
 				collegeTable[c][6] = "" + res.getInt(7);
-				//collegeTable[c][7] = "" + (((double)res.getInt(7))/((double)res.getInt(5)));
+				collegeTable[c][7] = "" + (int) (((double)res.getInt(7))/((double)res.getInt(5))*100);
+				collegeChartTable[c][0] = res.getString(4).replaceAll("[-+.^:,']","");
+				stateStats = stateMinMaxMap.get(collegeTable[c][0]);
+//				collegeChartTable[c][1] = "" + res.getInt(7);
+//				collegeChartTable[c][2] = "" + res.getInt(7);
+//				collegeChartTable[c][3] = "" + res.getInt(5);
+//				collegeChartTable[c][4] = "" + res.getInt(5);
+				collegeChartTable[c][1] = stateStats[4];
+				collegeChartTable[c][2] = "" + res.getInt(7);
+				collegeChartTable[c][3] = "" + res.getInt(5);
+				collegeChartTable[c][4] = stateStats[2];
 				c++;
-				System.out.println("ans: "+((double)res.getInt(7))/((double)res.getInt(5)));
+				
 			}
-			/*
-			for(int i = 0; i < collegeTable.length; i++){
-				System.out.println(collegeTable[i][0]+" "+collegeTable[i][1]+" "+collegeTable[i][2]+" "+collegeTable[i][3]+" "+collegeTable[i][4]+" "+collegeTable[i][5]+" "+collegeTable[i][6]);
-			}
-			*/
+			
+			
 			request.setAttribute("collegeTable", collegeTable);
 			
-			System.out.println("\n\nSTREAM TABLE==================================================");
-			printTableArray(streamTable);
-			System.out.println("\n\nCOLLEGE TABLE=================================================");
-			printTableArray(collegeTable);
+//			System.out.println("\n\nSTREAM TABLE==================================================");
+//			printTableArray(streamTable);
+//			System.out.println("\n\nCOLLEGE TABLE=================================================");
+//			printTableArray(collegeTable);
+//			System.out.println("\n\nSTREAM CHART TABLE=================================================");
+//			printTableArray(streamChartTable);
 			HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
-			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)"}};
+			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)", "Tuition to Early Salary Ratio (%)"}};
 			responseMap.put("CollegesTableHeader", collegesHeader);
 			responseMap.put("CollegesTable", collegeTable);
+			String[][] collegesChartHeader = {{"College Name", "Minimum Tuition($)", "Net Tuition($)", "Early-career Salary ($)", "Max Early-career Salary"}};
+			responseMap.put("CollegesChartHeader", collegesChartHeader);
+			responseMap.put("CollegesChartTable", collegeChartTable);
+//			String[][] stateMinMaxHeader = {{"State", "Minimum Early-career Salary", "Maximum Early-career Salary", "Minimum Mid-career Salary", "Maximum Mid-career Salary", "Minimum Tuition Cost", "Maximum Tuition Cost"}};
+//			responseMap.put("StateMinMaxHeader", stateMinMaxHeader);
+//			responseMap.put("StateMinMaxTable", stateMinMaxTable);
 			String[][] streamsHeader = {{"Stream", "Rank", "Job title", "Mid-career salary ($)", "Most common major"}};
 			responseMap.put("StreamsTableHeader", streamsHeader);
 			responseMap.put("StreamsTable", streamTable);
+			String[][] streamChartHeader = {{"ID", "Mid-Career Salary ($)", "Most Common Major for Job", "Stream", "Mid-Career Salary"}};
+			responseMap.put("StreamsChartHeader", streamChartHeader);
+			responseMap.put("StreamsChartTable", streamChartTable);
 			String jsonOut = new Gson().toJson(responseMap);
 //			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/table.jsp");
 //			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher(responseMap);
 //			RequetsDispatcherObj.forward(request, response);
 			
-			System.out.println("\n\n\n" + jsonOut);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(jsonOut);

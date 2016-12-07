@@ -39,7 +39,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
-      google.charts.load('current', {'packages':['table']});
+      google.charts.load('current', {'packages':['table', 'corechart']});
     </script>
     
     <!-- 	Other methods and styling-->
@@ -84,7 +84,7 @@
                         <a class="page-scroll" href="#misc">Miscellaneous</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">About</a>
+                        <a class="page-scroll" href="#charts">Charts</a>
                     </li>
                 </ul>
             </div>
@@ -208,9 +208,9 @@
                                     var all = streams.concat(states);
                                     
                                     //var alls = $("#streams_field").serializeArray() + $("#states_field").serializeArray();
-                                    console.log(streams);
-                                    console.log(states);
-                                    console.log(all);
+                                    //console.log(streams);
+                                    //console.log(states);
+                                    //console.log(all);
                 
                                     //console.log(alls);
                                     /*
@@ -229,25 +229,61 @@
                                             //do something
                                             console.log("sent data! " + data + "\nstatus: " + status );
                                             console.log(data);
-                                            console.log(data.CollegesTable);
-                                            console.log(data.StreamsTable);
+                                            //console.log(data.CollegesTable);
+                                            //console.log(data.StreamsTable);
+                                            console.log("HERE:");
+                                            //console.log(data.CollegesChartTable);
                                             drawTable("Colleges", data.CollegesTableHeader[0], data.CollegesTable, "collegesTable");
+                                            drawCandlestickChart("Mid-career Salaries for Jobs", data.CollegesChartHeader[0], data.CollegesChartTable, "collegesChart");
                                             drawTable("Streams and Jobs", data.StreamsTableHeader[0], data.StreamsTable, "streamsTable");
+                                            //drawBubbleChart("Mid-career Salaries for Jobs", data.StreamsChartHeader[0], data.StreamsChartTable, "streamsChart");
                                             //$("div.result").html(data); 
                                         },
                                         "json"
                                       );
-                                      
-//                                    $("#main-form").ajaxForm({
-//                                        url: 'localhost:8080/DBCollege/Index', 
-//                                        type: 'post',
-//                                        data: {
-//                                            streamIn: streams,
-//                                            stateIn: states,
-//                                        },
-//                                        success: function(responseText){alert('ok'+responseText.text);}, 
-////                                        error: function(responseText){alert('ok'+responseText.text);} 
-//                                    });
+                                      $.post(
+                                        "/RU-Worth-It/College",
+                                        /*{ 
+                                        streamIn: JSON.stringify(streams),
+                                        stateIn: states
+                                        },*/
+                                        //$.param(streams),
+                                        $.param(all),
+                                        function(data, status){
+                                            //do something
+                                            console.log("sent data! " + data + "\nstatus: " + status );
+                                            /* console.log(data);
+                                            console.log(data.q1Table);
+                                            console.log(data.q2Table);
+                                            console.log(data.q3Table); */
+                                            drawTable("Average Salary by State and Stream", data.q2Header[0], data.q2Table, "avgSalColTable");
+                                            drawTable("Top Colleges by Stream", data.q3Header[0], data.q3Table, "topColByStreamTable");
+                                            drawTable("Most Meaningful Colleges", data.q1Header[0], data.q1Table, "mostMeaningfulColTable");
+                                            //$("div.result").html(data); 
+                                        },
+                                        "json"
+                                      );
+                                      $.post(
+                                        "/RU-Worth-It/Stream",
+                                        /*{ 
+                                        streamIn: JSON.stringify(streams),
+                                        stateIn: states
+                                        },*/
+                                        //$.param(streams),
+                                        $.param(all),
+                                        function(data, status){
+                                            //do something
+                                            console.log("sent data! " + data + "\nstatus: " + status );
+                                            /* console.log(data);
+                                            console.log(data.CollegesTable);
+                                            console.log(data.StreamsTable); */
+                                            drawTable("Average Salary by Job", data.q1Header[0], data.q1Table, "avgSalJobTable");
+                                            drawTable("Average Salary by Major", data.q2Header[0], data.q2Table, "avgSalMajTable");
+                                            drawTable("Top Jobs for Major", data.q3Header[0], data.q3Table, "topJobMajTable");
+                                            //$("div.result").html(data); 
+                                        },
+                                        "json"
+                                     );
                                 });
                             });
                         </script>
@@ -269,12 +305,16 @@
             $("#collegesTab").click(function(){
                 console.log("Colleges Tabbed");
                 $("#collegesAgDiv").show();
+                $("#collegesChartDiv").show();
                 $("#streamsAgDiv").hide();
+                $("#streamsChartDiv").hide();
             });
             $("#streamsTab").click(function(){
                 console.log("Streams Tabbed");
                 $("#collegesAgDiv").hide();
+//                $("#collegesChartDiv").hide();
                 $("#streamsAgDiv").show();
+//                $("#streamsChartDiv").show();
 //                $('.nav-tabs a[href="#streamsAgDiv"]').tab('show');
             });
         });
@@ -306,8 +346,8 @@
 
     <!-- Miscellaneous (Aggregates) Section -->
     <section id="misc" class="content-section text-center">
-    	<div class="row download-section">
-			<div id="collegesAgDiv" class="container col-lg-10 col-lg-offset-1">
+    	<div class="row download-section" style="margin-left:0px; margin-right:0px; padding-left:75px; padding-right:75px">
+			<div id="collegesAgDiv" class="container col-lg-12">
 				<h2>Colleges Miscellaneous & Aggregates</h2>
 				<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#avgSalCol" style="font-size:18px">Average Salaries of States and Streams</a></li>
@@ -317,15 +357,12 @@
 				
 				<div id="miscColleges" class="tab-content">
 					<div id="avgSalCol" class="tab-pane fade in active">
-						<h3>1</h3>
 						<div id="avgSalColTable" class="table"></div>
 					</div>
 					<div id="topColByStream" class="tab-pane fade">
-						<h3>2</h3>
 						<div id="topColByStreamTable" class="table"></div>
 					</div>
 					<div id="mostMeaningfulCol" class="tab-pane fade">
-						<h3>3</h3>
 						<div id="mostMeaningfulColTable" class="table"></div>
 					</div>
 				</div>
@@ -340,15 +377,12 @@
 				
 				<div id="miscStreams" class="tab-content">
 					<div id="avgSalJob" class="tab-pane fade in active">
-						<h3>4</h3>
 						<div id="avgSalJobTable" class="table"></div>
 					</div>
 					<div id="avgSalMaj" class="tab-pane fade">
-						<h3>5</h3>
 						<div id="avgSalMajTable" class="table"></div>
 					</div>
 					<div id="topJobMaj" class="tab-pane fade">
-						<h3>6</h3>
 						<div id="topJobMajTable" class="table"></div>
 					</div>
 				</div>
@@ -356,25 +390,19 @@
 		</div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
+    <!-- Charts Section -->
+    <section id="charts" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Contact Start Bootstrap</h2>
-                <p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
-                <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
-                </p>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-                    </li>
-                    <li>
-                        <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
-                    </li>
-                </ul>
+            <div class="col-lg-12 col-lg-offset-0">
+                <h2>Some Interesting Charts</h2>
+                <div id="collegesChartDiv">
+                <p id="chartDescription"></p>
+                <div id="collegesChart" style="width: 100%; max-height: 600px;"></div>
+                </div>
+                <div id="streamsChartDiv">
+                <p id="chartDescription"></p>
+                <div id="streamsChart" style="width: 100%; max-height: 600px;"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -385,7 +413,7 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; Your Website 2016</p>
+            <p>Copyright &copy; RU Worth It? 2016</p>
         </div>
     </footer>
 

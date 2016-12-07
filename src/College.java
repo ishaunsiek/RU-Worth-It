@@ -188,9 +188,9 @@ public class College extends HttpServlet {
 				q2Table[c][1] = res2.getString(2).replaceAll("[-+.^:,']","");
 				q2Table[c][2] = "" + res2.getInt(3);
 				q2Table[c][3] = res2.getString(4).replaceAll("[-+.^:,']","");
-				q2Table[c][4] = "" + res2.getDouble(5);
-				q2Table[c][5] = "" + res2.getDouble(6);
-				q2Table[c][6] = "" + res2.getDouble(7);
+				q2Table[c][4] = "" + res2.getInt(5);
+				q2Table[c][5] = "" + res2.getInt(6);
+				q2Table[c][6] = "" + res2.getInt(7);
 				c++;
 			}
 			
@@ -223,29 +223,29 @@ public class College extends HttpServlet {
 			}
 			*/
 			
-			System.out.println("\n\nQ1 TABLE==================================================");
-			printTableArray(q1Table);
-			System.out.println("\n\nQ2 TABLE=================================================");
-			printTableArray(q2Table);
-			System.out.println("\n\nQ3 TABLE=================================================");
-			printTableArray(q3Table);
-			/*HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
-			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)"}};
-			responseMap.put("CollegesTableHeader", collegesHeader);
-			responseMap.put("CollegesTable", collegeTable);
-			String[][] streamsHeader = {{"Stream", "Rank", "Job title", "Mid-career salary ($)", "Most common major"}};
-			responseMap.put("StreamsTableHeader", streamsHeader);
-			responseMap.put("StreamsTable", streamTable);
+//			System.out.println("\n\nQ1 TABLE==================================================");
+//			printTableArray(q1Table);
+//			System.out.println("\n\nQ2 TABLE=================================================");
+//			printTableArray(q2Table);
+//			System.out.println("\n\nQ3 TABLE=================================================");
+//			printTableArray(q3Table);
+			HashMap<String, String[][]> responseMap = new HashMap<String, String[][]>();
+			String[][] q1Header = {{"State", "Stream", "Rank", "College Name", "Early-career Salary ($)", "Mid-career Salary ($)", "Net Tuition ($)", "Meaningful Ratio (%)"}};
+			responseMap.put("q1Header", q1Header);
+			responseMap.put("q1Table", q1Table);
+			String[][] q2Header = {{"State", "Stream", "Rank", "College Name", "Early-career Salary ($)", "Mid-career Salary ($)", "Average Tuition ($)"}};
+			responseMap.put("q2Header", q2Header);
+			responseMap.put("q2Table", q2Table);
+			String[][] q3Header = {{"State", "Stream", "Rank", "College Name", "Early-career Salary ($)", "Mid-career Salary ($)", "Net Tuition ($)"}};
+			responseMap.put("q3Header", q3Header);
+			responseMap.put("q3Table", q3Table);
 			String jsonOut = new Gson().toJson(responseMap);
-//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher("/table.jsp");
-//			RequestDispatcher RequetsDispatcherObj = request.getRequestDispatcher(responseMap);
-//			RequetsDispatcherObj.forward(request, response);
 			
 			System.out.println("\n\n\n" + jsonOut);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(jsonOut);
-			*/
+			
 			
 			res1.close();
 			res2.close();
