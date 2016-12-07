@@ -1,6 +1,6 @@
- function drawTable(tableName, colNames, tableData, tableID) {
+function drawTable(tableName, colNames, tableData, tableID) {
 	  var data = new google.visualization.DataTable();
-	  var options = {showRowNumber: true, title: tableName,height: '550px', width: '100%'};
+	  var options = {showRowNumber: true, title: tableName,height: '500px', width: '100%'};
 	  console.log(tableData);
 	  var i = 0;
 	  for(i = 0; i<colNames.length; i++){
@@ -42,9 +42,11 @@ function drawBubbleChart(tableName, colNames, tableData, tableID){
 function drawCandlestickChart(tableName, colNames, tableData, tableID){
 	  var data = new google.visualization.DataTable();
 	  var options = {
-		        title: 'Difference between Yearly Early-career Salary and Yearly Tuition',
+		        title: 'Difference between Yearly Early-career Salary and Yearly Tuition by Colleges',
 		        hAxis: {title: 'US Dollars ($)'},
-		        vAxis: {title: 'Colleges'}
+		        vAxis: {title: 'Colleges'},
+		        width: "1000px",
+		        bar: {groupWidth: 20}
 		      };
 	  console.log(tableData);
 	  var i = 0;

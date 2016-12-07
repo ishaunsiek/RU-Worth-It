@@ -238,6 +238,7 @@
                                             drawTable("Streams and Jobs", data.StreamsTableHeader[0], data.StreamsTable, "streamsTable");
                                             //drawBubbleChart("Mid-career Salaries for Jobs", data.StreamsChartHeader[0], data.StreamsChartTable, "streamsChart");
                                             //$("div.result").html(data); 
+                                            $("#loanDiv").show();
                                         },
                                         "json"
                                       );
@@ -345,10 +346,11 @@
     </section>
 
     <!-- Miscellaneous (Aggregates) Section -->
-    <section id="misc" class="content-section text-center">
-    	<div class="row download-section" style="margin-left:0px; margin-right:0px; padding-left:75px; padding-right:75px">
-			<div id="collegesAgDiv" class="container col-lg-12">
-				<h2>Colleges Miscellaneous & Aggregates</h2>
+    <section id="miscs" class="content-section text-center">
+    	<div id="misc" class="row download-section" style="margin-left:0px; margin-right:0px">
+			<div id="collegesAgDiv" class="container col-lg-10 col-lg-offset-1">
+				<h2 style="margin-bottom:5px">Colleges Miscellaneous & Aggregates</h2>
+				<h5>Click on the Streams & Jobs tab above to view related tables!</h5>
 				<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#avgSalCol" style="font-size:18px">Average Salaries of States and Streams</a></li>
 				<li><a data-toggle="tab" href="#topColByStream" style="font-size:18px">Top Colleges by State</a></li>
@@ -368,7 +370,8 @@
 				</div>
 			</div>
 			<div id="streamsAgDiv" class="container col-lg-10 col-lg-offset-1" style="display: none">
-				<h2>Streams Miscellaneous & Aggregates</h2>
+				<h2 style="margin-bottom:5px">Streams Miscellaneous & Aggregates</h2>
+				<h5>Click on the Colleges tab above to view related tables!</h5>
 				<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#avgSalJob" style="font-size:18px">Average Salary of Jobs</a></li>
 				<li><a data-toggle="tab" href="#avgSalMaj" style="font-size:18px">Average Salary of Common Major</a></li>
@@ -391,28 +394,35 @@
     </section>
 
     <!-- Charts Section -->
-    <section id="charts" class="container content-section text-center">
+    <section id="charts" class="container content-section text-center" style="margin-bottom:50px">
         <div class="row">
             <div class="col-lg-12 col-lg-offset-0">
                 <h2>Some Interesting Charts</h2>
-                <div id="collegesChartDiv">
+                <div id="collegesChartDiv" style="overflow-x: scroll; overflow-y:hidden; width:'100%'">
                 <p id="chartDescription"></p>
-                <div id="collegesChart" style="width: 100%; max-height: 600px;"></div>
+                <div id="collegesChart" style="width: 100%"></div>
                 </div>
                 <div id="streamsChartDiv">
                 <p id="chartDescription"></p>
-                <div id="streamsChart" style="width: 100%; max-height: 600px;"></div>
+                <div id="streamsChart" style="width: 100%"></div>
                 </div>
+                <div id= "loanDiv" style="display:none">
+                <div id="loanCounter" class="ftb-widget" data-width="670" data-height="710" data-widget-id="gGHzukrSYId"  data-href="https://www.graphiq.com/vlp/gGHzukrSYId">
+	                <div style="text-align:center;font:14px/16px Helvetica,arial;color:#3d3d3d;"><a href="https://www.graphiq.com/vlp/gGHzukrSYId" target="_blank" style="color:#3d3d3d;">StartClass | Graphiq</a>
+	                </div>
+                </div>
+                </div>
+                <script async src="https://s.graphiq.com/rx/widgets.js"></script>
             </div>
         </div>
     </section>
 
     <!-- Map Section -->
-    <div id="map"></div>
+<!--     <div id="map"></div> -->
 
     <!-- Footer -->
-    <footer>
-        <div class="container text-center">
+    <footer style="background-color:lightcoral">
+        <div class="container text-center" style="margin-top:0px; padding-top: 0px">
             <p>Copyright &copy; RU Worth It? 2016</p>
         </div>
     </footer>

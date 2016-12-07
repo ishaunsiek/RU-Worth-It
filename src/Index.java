@@ -246,6 +246,12 @@ public class Index extends HttpServlet {
 				collegeTable[c][7] = "" + (int) (((double)res.getInt(7))/((double)res.getInt(5))*100);
 				collegeChartTable[c][0] = res.getString(4).replaceAll("[-+.^:,']","");
 				stateStats = stateMinMaxMap.get(collegeTable[c][0]);
+				System.out.println(collegeTable[c][0]);
+				System.out.println("{ ");
+				for(int l=0;l<stateStats.length;l++){
+					System.out.print(stateStats[l] + ", ");
+				}
+				System.out.print(" }");
 //				collegeChartTable[c][1] = "" + res.getInt(7);
 //				collegeChartTable[c][2] = "" + res.getInt(7);
 //				collegeChartTable[c][3] = "" + res.getInt(5);
@@ -271,7 +277,7 @@ public class Index extends HttpServlet {
 			String[][] collegesHeader = {{"State", "Stream", "Rank", "College name", "Early-career salary ($)", "Mid-career salary ($)", "Net tuition($)", "Tuition to Early Salary Ratio (%)"}};
 			responseMap.put("CollegesTableHeader", collegesHeader);
 			responseMap.put("CollegesTable", collegeTable);
-			String[][] collegesChartHeader = {{"College Name", "Minimum Tuition($)", "Net Tuition($)", "Early-career Salary ($)", "Max Early-career Salary"}};
+			String[][] collegesChartHeader = {{"College Name", "Lowest tuition in state - Institution tuition; Starting salary for institution graduates - Highest starting salary in state", "Net Tuition($)", "Early-career Salary ($)", "Max Early-career Salary"}};
 			responseMap.put("CollegesChartHeader", collegesChartHeader);
 			responseMap.put("CollegesChartTable", collegeChartTable);
 //			String[][] stateMinMaxHeader = {{"State", "Minimum Early-career Salary", "Maximum Early-career Salary", "Minimum Mid-career Salary", "Maximum Mid-career Salary", "Minimum Tuition Cost", "Maximum Tuition Cost"}};
